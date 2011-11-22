@@ -10,7 +10,7 @@ class TurnEngine {
     val currentPlayer: GameClient = playerQueue.head;
     var newBoard = board;
     println("Player %s rolled a %d".format(currentPlayer, roll));
-    val possibleMoves: List[GameMove] = moveGenerator.generate(newBoard, roll, currentPlayer.color);
+    val possibleMoves: List[GameMove] = moveGenerator.generate(newBoard, roll, currentPlayer.colors.toArray: _*);
     println("Roll of %d generated %d possible moves".format(roll, possibleMoves.length));
     if (!possibleMoves.isEmpty) {
       val moveTaken = currentPlayer.makeMove(possibleMoves);

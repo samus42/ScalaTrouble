@@ -2,10 +2,10 @@ package trouble.engine.game
 
 import trouble.engine.board.{GameMove, PieceColor, GameBoard}
 
-case class GameClient (player: String, strategy: Strategy, color: PieceColor.Value) {
+case class GameClient (player: String, strategy: Strategy, colors: PieceColor.Value*) {
   def makeMove(possibleMoves: List[GameMove]) : GameMove = {
-    strategy.makeMove(possibleMoves, color);
+    strategy.makeMove(possibleMoves, colors.toArray);
   }
 
-  override def toString = "%s (%s)".format(player, color);
+  override def toString = "%s (%s)".format(player, colors.mkString(","));
 }

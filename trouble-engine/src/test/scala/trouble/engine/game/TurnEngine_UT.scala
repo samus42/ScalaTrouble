@@ -41,7 +41,7 @@ class TurnEngine_UT {
 
     val board = pieceMover.movePieces(new GameBoard(), (PieceColor.Red, 0, "red - 0"));
     val expectedBoard = pieceMover.movePieces(new GameBoard(), (PieceColor.Red, 0, "red - 1"));
-    when(strategy.makeMove(moveGenerator.generate(board, 1, PieceColor.Red), PieceColor.Red)).thenReturn(new GameMove(board.getPath(PieceColor.Red)(0), board.getPath(PieceColor.Red)(1), expectedBoard));
+    when(strategy.makeMove(moveGenerator.generate(board, 1, PieceColor.Red), Array(PieceColor.Red))).thenReturn(new GameMove(board.getPath(PieceColor.Red)(0), board.getPath(PieceColor.Red)(1), expectedBoard));
     val turnEngine = new TurnEngine();
     val newBoard = turnEngine.executeTurn(board, playerQueue, 1);
     assertThat(playerQueue.head.player, is("b"));
@@ -59,7 +59,7 @@ class TurnEngine_UT {
 
     val board = new GameBoard();
     val expectedBoard = pieceMover.movePieces(new GameBoard(), (PieceColor.Red, 0, "red - 0"));
-    when(strategy.makeMove(moveGenerator.generate(board, 6, PieceColor.Red), PieceColor.Red)).thenReturn(new GameMove(board.getNextAvailableStartingPosition(PieceColor.Red).get, board.getPath(PieceColor.Red)(0), expectedBoard));
+    when(strategy.makeMove(moveGenerator.generate(board, 6, PieceColor.Red), Array(PieceColor.Red))).thenReturn(new GameMove(board.getNextAvailableStartingPosition(PieceColor.Red).get, board.getPath(PieceColor.Red)(0), expectedBoard));
     val turnEngine = new TurnEngine();
     val newBoard = turnEngine.executeTurn(board, playerQueue, 6);
     assertThat(playerQueue.head.player, is("a"));

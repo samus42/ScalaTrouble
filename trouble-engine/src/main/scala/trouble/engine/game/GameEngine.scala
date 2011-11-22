@@ -13,10 +13,16 @@ class GameEngine {
     val playerQueue = Queue[GameClient]();
     players.foreach(p => playerQueue.enqueue(p));
     val turnEngine = new TurnEngine();
-    while (gameBoard.finishedTeams.isEmpty) {
+    while (determineWinner(players.toArray, gameBoard) == null) {
       val roll: Int = Random.nextInt(6) + 1
       gameBoard = turnEngine.executeTurn(gameBoard, playerQueue, roll);
     }
-    println(gameBoard.finishedTeams + " wins!");
+    println(determineWinner(players.toArray, gameBoard) + " wins!");
+  }
+
+  private def determineWinner(players: Array[GameClient], gameBoard : GameBoard) :GameClient = {
+    val winners = for (player <- players if player.colors.forall(gameBoard.finishedTeams.contains(_))) yield player;
+    if (winners.isEmpty) null;
+    else winners(0);
   }
 }
