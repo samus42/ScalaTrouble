@@ -1,8 +1,0 @@
-finishing move generator
---This line, and those below, will be ignored--
-
-M    trouble-engine/src/test/scala/trouble/engine/board/MoveGenerator_UT.scala
-M    trouble-engine/src/test/scala/trouble/engine/board/GameBoard_UT.scala
-M    trouble-engine/src/main/scala/trouble/engine/board/MoveGenerator.scala
-M    trouble-engine/src/main/scala/trouble/engine/board/GameBoard.scala
-A    trouble-engine/src/main/scala/trouble/engine/game
