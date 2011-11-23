@@ -4,21 +4,24 @@ import util.Random
 import trouble.engine.board.{PieceColor, MoveGenerator, GameBoard}
 import collection.mutable.Queue
 
-class GameEngine {
+class GameEngine(messageClient: MessageClient) {
+  def this() = this(new ConsoleMessageClient());
+  
   def startGame(players: GameClient*) : GameClient = {
+
     require(players.length > 0 && players.length <= 4);
 
     var gameBoard = new GameBoard();
 
     val playerQueue = Queue[GameClient]();
     players.foreach(p => playerQueue.enqueue(p));
-    val turnEngine = new TurnEngine();
+    val turnEngine = new TurnEngine(messageClient);
     while (determineWinner(players.toArray, gameBoard) == null) {
       val roll: Int = Random.nextInt(6) + 1
       gameBoard = turnEngine.executeTurn(gameBoard, playerQueue, roll);
     }
     val winner: GameClient = determineWinner(players.toArray, gameBoard)
-    println(winner + " wins!");
+    messageClient.displayMessage(winner + " wins!");
     winner;
   }
 

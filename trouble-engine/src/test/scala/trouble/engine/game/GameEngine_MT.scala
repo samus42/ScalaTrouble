@@ -12,6 +12,7 @@ class GameEngine_MT {
   val Gavin = "Gavin";
   val Ian = "Ian";
   val MaxGames = 100;
+  val engine = new GameEngine(new QuietMessageClient());
 
   private def initScoreMap(): Map[String, Int] = {
     val map = new HashMap[String, Int]();
@@ -22,7 +23,6 @@ class GameEngine_MT {
   }
 
   @Test def runTwoPersonGame() {
-    val engine = new GameEngine();
     val map = initScoreMap();
     for (i <- 0 until MaxGames) {
       recordResult(map, engine.startGame(new GameClient(Scott, new NoBrainStrategy(), PieceColor.Red), new GameClient(Gavin, new SuperAggressiveStrategy(), PieceColor.Green)));
@@ -31,7 +31,6 @@ class GameEngine_MT {
   }
 
   @Test def runFourPersonGame() {
-    val engine = new GameEngine();
     val map = initScoreMap();
     for (i <- 0 until MaxGames) {
       recordResult(map, engine.startGame(new GameClient(Scott, new NoBrainStrategy(), PieceColor.Red),
@@ -43,7 +42,6 @@ class GameEngine_MT {
   }
 
   @Test def runTwoPersonGameTwoColorsEach() {
-    val engine = new GameEngine();
     val map = initScoreMap();
     for (i <- 0 until MaxGames) {
       recordResult(map, engine.startGame(new GameClient(Scott, new NoBrainStrategy(), PieceColor.Red, PieceColor.Blue), new GameClient(Gavin, new SuperAggressiveStrategy(), PieceColor.Green, PieceColor.Yellow)));
