@@ -5,7 +5,7 @@ import trouble.engine.board.{PieceColor, MoveGenerator, GameBoard}
 import collection.mutable.Queue
 
 class GameEngine {
-  def startGame(players: GameClient*) {
+  def startGame(players: GameClient*) : GameClient = {
     require(players.length > 0 && players.length <= 4);
 
     var gameBoard = new GameBoard();
@@ -17,7 +17,9 @@ class GameEngine {
       val roll: Int = Random.nextInt(6) + 1
       gameBoard = turnEngine.executeTurn(gameBoard, playerQueue, roll);
     }
-    println(determineWinner(players.toArray, gameBoard) + " wins!");
+    val winner: GameClient = determineWinner(players.toArray, gameBoard)
+    println(winner + " wins!");
+    winner;
   }
 
   private def determineWinner(players: Array[GameClient], gameBoard : GameBoard) :GameClient = {
