@@ -8,6 +8,21 @@ class MoveGenerator {
     generate(board, roll, teams.toArray);
   }
   
+  private def addNormalMoves(path: scala.List[BoardPosition], team: PieceColor.Value, roll: Int, teams: Array[PieceColor.Value], board: GameBoard, _newMoves: List[GameMove]): List[GameMove] = {
+    var newMoves: List[GameMove] = _newMoves
+    val teamPositions: List[BoardPosition] = path.filter(p => p.isOccupied && p.gamePiece.color == team);
+    for (teamPosition <- teamPositions) {
+      if (isValidMove(teamPosition, path, roll, teams.toArray)) {
+        val pathIndex: Int = path.indexOf(teamPosition)
+        val fromPosition: BoardPosition = board.getPath(team)(pathIndex)
+        val toPosition: BoardPosition = board.getPath(team)(pathIndex + roll)
+        val newBoard = pieceMover.movePiece(board, fromPosition, toPosition);
+        newMoves = new GameMove(fromPosition, toPosition, newBoard) :: newMoves;
+      }
+    }
+    newMoves
+  }
+
   def generate(board: GameBoard, roll: Int, teams: Array[PieceColor.Value]): List[GameMove] = {
     var newMoves = List[GameMove]();
     for (team <- teams) {
@@ -15,25 +30,12 @@ class MoveGenerator {
       if (roll == 6) {
         newMoves = addExitingStartingPositionMoves(path, teams, board, team, newMoves)
       }
-      newMoves = addNormalMoves(path, team)
+      newMoves = addNormalMoves(path, team, roll, teams, board, newMoves)
     }
+
     newMoves.foreach(_.resultingBoard.regenerateMissingPieces());
     newMoves;
   }
-
-  private def addNormalMoves(path: scala.List[BoardPosition], team: PieceColor.Value): List[GameMove] = {
-      val teamPositions: List[BoardPosition] = path.filter(p => p.isOccupied && p.gamePiece.color == team);
-      for (teamPosition <- teamPositions) {
-        if (isValidMove(teamPosition, path, roll, teams.toArray)) {
-          val pathIndex: Int = path.indexOf(teamPosition)
-          val fromPosition: BoardPosition = board.getPath(team)(pathIndex)
-          val toPosition: BoardPosition = board.getPath(team)(pathIndex + roll)
-          val newBoard = pieceMover.movePiece(board, fromPosition, toPosition);
-          newMoves = new GameMove(fromPosition, toPosition, newBoard) :: newMoves;
-        }
-      }
-      newMoves
-    }
 
   private def addExitingStartingPositionMoves(path: scala.List[BoardPosition], teams: Array[PieceColor.Value], board: GameBoard, team: PieceColor.Value, _newMoves: List[GameMove]): List[GameMove] = {
     var newMoves: List[GameMove] = _newMoves

@@ -8,20 +8,7 @@ class SuperAggressiveStrategy extends Strategy {
   val OtherTeamStartingPosition = 100;
   val OwnTeamGoalPosition = 60;
 
-  def makeMove(possibleMoves: List[GameMove], colors: Array[PieceColor.Value]): GameMove = {
-    var currentMove: GameMove = null;
-    var currentScore = -10000;
-    for (move <- possibleMoves) {
-      val score = scoreMove(move, colors);
-      if (score > currentScore) {
-        currentScore = score;
-        currentMove = move;
-      }
-    }
-    currentMove;
-  }
-
-  private def scoreMove(move: GameMove, colors: Array[PieceColor.Value]): Int = {
+  def scoreMove(move: GameMove, colors: Array[PieceColor.Value]): Int = {
     var score = 0;
     for (color <- PieceColor.orderedList) {
       val occupied = move.resultingBoard.getStartingPositions(color).filter(_.isOccupied).length;

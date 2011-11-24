@@ -8,8 +8,8 @@ import trouble.engine.game.Strategy
 import trouble.engine.board._
 import scala.Array._
 
-class GoalOrientedStrategy_UT {
-  val strategy: Strategy = new GoalOrientedStrategy();
+class BalancedGoalOrientedStrategy_UT {
+  val strategy: Strategy = new BalancedGoalOrientedStrategy();
   val pieceMover = new PieceMover();
   val moveGenerator = new MoveGenerator();
 
@@ -33,25 +33,25 @@ class GoalOrientedStrategy_UT {
     assertThat(resultingMove.toPosition.name, is("blue goal 0"));
   }
 
-  @Test def prefersNormalMoveOverExitingStartingPosition() {
+  @Test def prefersExitingStartingPositionOverNormalMove() {
     val initialState = pieceMover.movePieces(new GameBoard(), (PieceColor.Red, 0, "red - 1"));
     val moves: List[GameMove] = moveGenerator.generate(initialState, 6, PieceColor.Red);
     println("Possible Moves: " + moves);
     val resultingMove: GameMove = strategy.makeMove(moves, Array(PieceColor.Red));
     assertThat(resultingMove.isCapture, is(false));
-    assertThat(resultingMove.fromPosition.name, is("red - 1"));
-    assertThat(resultingMove.toPosition.name, is("blue - 0"));
+    assertThat(resultingMove.fromPosition.name, is("red start 1"));
+    assertThat(resultingMove.toPosition.name, is("red - 0"));
 
   }
 
-  @Test def prefersNormalMoveOverStartingPositionMultiColorPlayer() {
-    val initialState = pieceMover.movePieces(new GameBoard(), (PieceColor.Blue, 0, "blue - 1"));
+  @Test def prefersStartingPositionMultiColorPlayerOverNormalMove() {
+    val initialState = pieceMover.movePieces(new GameBoard(), (PieceColor.Red, 0, "blue - 1"));
     val moves: List[GameMove] = moveGenerator.generate(initialState, 6, PieceColor.Red, PieceColor.Blue);
     println("Possible Moves: " + moves);
     val resultingMove: GameMove = strategy.makeMove(moves, Array(PieceColor.Red, PieceColor.Blue));
     assertThat(resultingMove.isCapture, is(false));
-    assertThat(resultingMove.fromPosition.name, is("blue - 1"));
-    assertThat(resultingMove.toPosition.name, is("green - 0"));
+    assertThat(resultingMove.fromPosition.name, is("blue start 0"));
+    assertThat(resultingMove.toPosition.name, is("blue - 0"));
   }
 
   @Test def prefersGoalOverNormalMove() {
@@ -75,24 +75,24 @@ class GoalOrientedStrategy_UT {
     assertThat(resultingMove.toPosition.name, is("blue goal 0"));
   }
 
-  @Test def prefersGoalOverExiting() {
+  @Test def prefersExitingOverGoal() {
     val initialState = pieceMover.movePieces(new GameBoard(), (PieceColor.Red, 0, "yellow - 1"));
     val moves: List[GameMove] = moveGenerator.generate(initialState, 6, PieceColor.Red);
     println("Possible Moves: " + moves);
     val resultingMove: GameMove = strategy.makeMove(moves, Array(PieceColor.Red));
     assertThat(resultingMove.isCapture, is(false));
-    assertThat(resultingMove.fromPosition.name, is("yellow - 1"));
-    assertThat(resultingMove.toPosition.name, is("red goal 0"));
+    assertThat(resultingMove.fromPosition.name, is("red start 1"));
+    assertThat(resultingMove.toPosition.name, is("red - 0"));
   }
 
-  @Test def prefersGoalOverExitingMultiColorPlayer() {
+  @Test def prefersExitingOverGoalMultiColorPlayer() {
     val initialState = pieceMover.movePieces(new GameBoard(), (PieceColor.Blue, 0, "red - 1"));
     val moves: List[GameMove] = moveGenerator.generate(initialState, 6, PieceColor.Red, PieceColor.Blue);
     println("Possible Moves: " + moves);
     val resultingMove: GameMove = strategy.makeMove(moves, Array(PieceColor.Red, PieceColor.Blue));
     assertThat(resultingMove.isCapture, is(false));
-    assertThat(resultingMove.fromPosition.name, is("red - 1"));
-    assertThat(resultingMove.toPosition.name, is("blue goal 0"));
+    assertThat(resultingMove.fromPosition.name, is("blue start 1"));
+    assertThat(resultingMove.toPosition.name, is("blue - 0"));
   }
 
   @Test def prefersNormalMoveOverPieceAlreadyInGoal() {
