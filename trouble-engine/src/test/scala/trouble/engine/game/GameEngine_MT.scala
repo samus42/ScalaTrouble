@@ -11,7 +11,7 @@ class GameEngine_MT {
   val Pam = "Pam";
   val Gavin = "Gavin";
   val Ian = "Ian";
-  val MaxGames = 100;
+  val MaxGames = 10;
   val engine = new GameEngine(new QuietMessageClient());
 
   private def initScoreMap(): Map[String, Int] = {
