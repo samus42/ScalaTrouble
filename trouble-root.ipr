@@ -70,10 +70,15 @@
     <autodetection-disabled>
       <facet-type id="scala">
         <modules>
+          <module name="console" />
           <module name="trouble-engine" />
         </modules>
       </facet-type>
     </autodetection-disabled>
+  </component>
+  <component name="HighlightingAdvisor">
+    <option name="SUGGEST_TYPE_AWARE_HIGHLIGHTING" value="false" />
+    <option name="TYPE_AWARE_HIGHLIGHTING_ENABLED" value="true" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
@@ -254,6 +259,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/console/console.iml" filepath="$PROJECT_DIR$/console/console.iml" />
       <module fileurl="file://$PROJECT_DIR$/trouble-engine/trouble-engine.iml" filepath="$PROJECT_DIR$/trouble-engine/trouble-engine.iml" />
       <module fileurl="file://$PROJECT_DIR$/trouble-root.iml" filepath="$PROJECT_DIR$/trouble-root.iml" />
     </modules>
