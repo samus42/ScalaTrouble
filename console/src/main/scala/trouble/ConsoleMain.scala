@@ -3,6 +3,7 @@ package trouble
 import engine.board.PieceColor
 import engine.game.ai.{BalancedGoalOrientedStrategy, NoBrainStrategy}
 import engine.game.{GameClient, ConsoleMessageClient, GameEngine}
+import game.UserConsoleStrategy
 import org.apache.commons.cli.{HelpFormatter, UnrecognizedOptionException, PosixParser, Options}
 
 object ConsoleMain {
@@ -20,7 +21,7 @@ object ConsoleMain {
       val players = new Array[GameClient](4);
       for (i <- 0 until 4) {
         if (i < numHumanPlayers) {
-          players(i) = new GameClient("human %s".format(i), new NoBrainStrategy(), PieceColor.orderedList(i));
+          players(i) = new GameClient("human %s".format(i), new UserConsoleStrategy(), PieceColor.orderedList(i));
         } else if (i <= numCPUPlayers + numHumanPlayers ) {
           players(i) = new GameClient("cpu %s".format(i), new BalancedGoalOrientedStrategy(), PieceColor.orderedList(i));
         }
