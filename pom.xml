@@ -11,6 +11,7 @@
     <modules>
         <module>trouble-engine</module>
         <module>console</module>
+        <module>slickui</module>
     </modules>
 
     <dependencyManagement>
