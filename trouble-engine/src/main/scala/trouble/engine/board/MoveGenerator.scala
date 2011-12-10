@@ -10,12 +10,12 @@ class MoveGenerator {
   
   private def addNormalMoves(path: scala.List[BoardPosition], team: PieceColor.Value, roll: Int, teams: Array[PieceColor.Value], board: GameBoard, _newMoves: List[GameMove]): List[GameMove] = {
     var newMoves: List[GameMove] = _newMoves
-    val teamPositions: List[BoardPosition] = path.filter(p => p.isOccupied && p.gamePiece.color == team);
+    val teamPositions = path.filter(p => p.isOccupied && p.gamePiece.color == team);
     for (teamPosition <- teamPositions) {
       if (isValidMove(teamPosition, path, roll, teams.toArray)) {
-        val pathIndex: Int = path.indexOf(teamPosition)
-        val fromPosition: BoardPosition = board.getPath(team)(pathIndex)
-        val toPosition: BoardPosition = board.getPath(team)(pathIndex + roll)
+        val pathIndex = path.indexOf(teamPosition)
+        val fromPosition = board.getPath(team)(pathIndex)
+        val toPosition = board.getPath(team)(pathIndex + roll)
         val newBoard = pieceMover.movePiece(board, fromPosition, toPosition);
         newMoves = new GameMove(fromPosition, toPosition, newBoard) :: newMoves;
       }
