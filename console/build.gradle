@@ -1,0 +1,6 @@
+apply plugin: "scala"
+
+dependencies {
+    compile "commons-cli:commons-cli:1.2"
+    compile project(":trouble-engine")
+}

@@ -1,0 +1,5 @@
+apply plugin: "scala"
+
+test {
+    exclude '**/*_MT.*'
+}
