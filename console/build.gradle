@@ -4,3 +4,20 @@ dependencies {
     compile "commons-cli:commons-cli:1.2"
     compile project(":trouble-engine")
 }
+
+//This creates a 'fat' jar
+jar {
+    manifest {
+        attributes("Main-Class": "trouble.ConsoleMain")
+        doFirst {  // <- note the doFirst
+            // the following must be executed in doFirst since the configuration
+            // has not been initialized at configuration time
+            from(configurations.runtime.resolve().collect { it.isDirectory() ? it : zipTree(it) }) {
+                exclude 'META-INF/MANIFEST.MF'
+                exclude 'META-INF/*.SF'
+                exclude 'META-INF/*.DSA'
+                exclude 'META-INF/*.RSA'
+            }
+        }
+    }
+}
