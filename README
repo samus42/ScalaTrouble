@@ -6,3 +6,4 @@ AI behavior for avoiding potential captures
 AI that does predictive lookahead
 Breakup AI behaviors into traits, create AIs by mixing in traits
 UI
+from work network
